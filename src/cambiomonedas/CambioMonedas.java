@@ -36,7 +36,6 @@ public class CambioMonedas extends JFrame implements ActionListener{
     JButton calcular = new JButton("Calcular");
 
     JPanel jpan1 = new JPanel(); 
-    JPanel jpan3 = new JPanel();
     
     JScrollPane scrollPane = new JScrollPane();
     JScrollPane scrollPane1 = new JScrollPane();
@@ -62,13 +61,12 @@ public class CambioMonedas extends JFrame implements ActionListener{
         this.getContentPane().setBackground(Color.LIGHT_GRAY);
         
         c.add(jpan1);
-        c.add(jpan3);
         
         c.add(scrollPane1);
         
         c.add(texto1);
         c.add(texto2);
-        c.add(texto3);
+//        c.add(texto3);
         c.add(texto4);
         c.add(texto5);
         
@@ -80,7 +78,7 @@ public class CambioMonedas extends JFrame implements ActionListener{
         
         texto1.setBounds(10, 100, 200, 20);
         texto2.setBounds(10, 200, 200, 20);
-        texto3.setBounds(350, 100, 200, 20);
+//        texto3.setBounds(350, 100, 200, 20);
         texto4.setBounds(10, 20, 250, 20);
         texto5.setBounds(10, 50, 250, 20);
         
@@ -94,11 +92,9 @@ public class CambioMonedas extends JFrame implements ActionListener{
         
         jpan1.setBounds(10, 120, 250, 70);
         jpan1.setBackground(Color.WHITE);
-        jpan3.setBounds(350, 120, 220, 70);
-        jpan3.setBackground(Color.WHITE);
         
-        scrollPane.setBounds(10, 220, 2000, 2000);
-        scrollPane.setPreferredSize(new Dimension(2000, 2000));  
+        scrollPane.setBounds(10, 220, 2500, 2500);
+        scrollPane.setPreferredSize(new Dimension(2500, 2500));  
         
         scrollPane1.setBounds(10, 220, 1150, 400);
         scrollPane1.setPreferredSize(new Dimension(1150, 400)); 
@@ -199,13 +195,38 @@ public class CambioMonedas extends JFrame implements ActionListener{
                             
                             String cadena = matriz[i][j - valor ].getText();
                             
+                            String digitosA = ""; 
+                            String rutaA = "";
+                            String ruraB = "";
+                            boolean esNumeroA = true;
                             
+                            for(int k = 0; k < cadena.length(); k++){
+                                
+                                if( cadena.charAt(k) != ' ' && cadena.charAt(k) != 'I' && esNumeroA){
+                                
+                                    digitosA = digitosA + cadena.charAt(k);
+                                    
+                                } else if(cadena.charAt(k) == 'I' && esNumeroA) {
+                                    
+                                    digitosA = "Infinity";
+                                    break;
+                                    
+                                } else {                               
+                                                                    
+                                    rutaA =  rutaA + String.valueOf(cadena.charAt(k));
+                                    esNumeroA = false;
+                                    
+                                }
+                                
+                            }
                             
-                            double cantidad = 1 + Double.parseDouble(cadena);
+                            rutaA = " " + rutaA + "1:" +Integer.toString(valor)+ "+" + "\n";
+                            
+                            double cantidad = 1 + Double.parseDouble(digitosA);
                             
                             if(cantidad != Double.POSITIVE_INFINITY){
                                 
-                                matriz[i][j] = new JTextArea(Double.toString(cantidad));
+                                matriz[i][j] = new JTextArea(Double.toString(cantidad) + "\n" + rutaA );
                             
                                 
                             } else {
@@ -218,12 +239,38 @@ public class CambioMonedas extends JFrame implements ActionListener{
                             
                             String cadena = matriz[i-1][j].getText();
                             
+                            System.out.println(cadena+ " i: "+ (i-1) + " j: "+ j);
                             
-                            double cantidad = Double.parseDouble(cadena);
+                            String digitosA = ""; 
+                            String rutaA = "";
+                            String ruraB = "";
+                            boolean esNumeroA = true;
+                            
+                            for(int k = 0; k < cadena.length(); k++){
+                                
+                                if( cadena.charAt(k) != ' ' && cadena.charAt(k) != 'I' && esNumeroA){
+                                
+                                    digitosA = digitosA + cadena.charAt(k);
+                                    
+                                } else if(cadena.charAt(k) == 'I' && esNumeroA) {
+                                    
+                                    digitosA = "Infinity";
+                                    break;
+                                    
+                                } else {                               
+                                                                    
+                                    rutaA =  rutaA + String.valueOf(cadena.charAt(k));
+                                    esNumeroA = false;
+                                    
+                                }
+                                
+                            }
+                            
+                            double cantidad = Double.parseDouble(digitosA);
                             
                             if(cantidad != Double.POSITIVE_INFINITY){
                                 
-                                matriz[i][j] = new JTextArea(Double.toString(cantidad));
+                                matriz[i][j] = new JTextArea(Double.toString(cantidad) + "\n" + rutaA );
                             
                                 
                             } else {
@@ -235,22 +282,90 @@ public class CambioMonedas extends JFrame implements ActionListener{
                             
                         }else if(i>2){
                         
+                            String cadenaA = matriz[i-1][j].getText();
+                            String cadenaB = matriz[i][j - valor].getText();
                             
-                            double a = Double.parseDouble(matriz[i-1][j].getText());
-                            double b = 1 + Double.parseDouble(matriz[i][j - valor].getText());
+                            String digitosA = ""; 
+                            String digitosB = ""; 
+                            String rutaA = "";
+                            String rutaB = "";
+                            boolean esNumeroA = true;
+                            boolean esNumeroB = true;
                             
-                            if(a<=b){
+                            for(int k = 0; k < cadenaA.length(); k++){
+                                
+                                if( cadenaA.charAt(k) != ' ' && cadenaA.charAt(k) != 'I' && esNumeroA){
+                                
+                                    digitosA = digitosA + cadenaA.charAt(k);
+                                    
+                                } else if(cadenaA.charAt(k) == 'I' && esNumeroA) {
+                                    
+                                    digitosA = "Infinity";
+                                    break;
+                                    
+                                } else {                               
+                                                                    
+                                    rutaA =  rutaA + String.valueOf(cadenaA.charAt(k));
+                                    esNumeroA = false;
+                                    
+                                }
+                                
+                            }
+                            
+                            for(int k = 0; k < cadenaB.length(); k++){
+                                
+                                if( cadenaB.charAt(k) != ' ' && cadenaB.charAt(k) != 'I' && esNumeroB){
+                                
+                                    digitosB = digitosB + cadenaB.charAt(k);
+                                    
+                                } else if(cadenaB.charAt(k) == 'I' && esNumeroB) {
+                                    
+                                    digitosB = "Infinity";
+                                    break;
+                                    
+                                } else {                               
+                                                                    
+                                    rutaB =  rutaB + String.valueOf(cadenaB.charAt(k));
+                                    esNumeroB = false;
+                                    
+                                }
+                                
+                            }
+                            
+                            rutaB = " " + rutaB + "1:" +Integer.toString(valor)+ "+" + "\n";
+                            
+                            double a = Double.parseDouble(digitosA);
+                            double b = 1 + Double.parseDouble(digitosB);
+                            
+                            if(a<b){
 
-                                matriz[i][j] = new JTextArea(Double.toString(a));
+                                if(a != Double.POSITIVE_INFINITY){
+                                    
+                                    matriz[i][j] = new JTextArea(Double.toString(a) + "\n" + rutaA);
+                                    
+                                }else{
+                                
+                                    matriz[i][j] = new JTextArea(Double.toString(a));
+                                    
+                                }
+                                
+                                
                                 
                             } else {
 
-                                matriz[i][j] = new JTextArea(Double.toString(b));
+                                if(b != Double.POSITIVE_INFINITY){
+                                    
+                                    matriz[i][j] = new JTextArea(Double.toString(b) + "\n" + rutaB);
+                                    
+                                }else{
+                                
+                                    matriz[i][j] = new JTextArea(Double.toString(b));
+                                    
+                                }
 
-                            }
-//                            
+                            }                          
 
-                        }else {           
+                        } else {           
                            
                             matriz[i][j] = new JTextArea("0");
                             
@@ -262,7 +377,7 @@ public class CambioMonedas extends JFrame implements ActionListener{
                     }
                     
                     matriz[i][j].setBorder(border);
-                    matriz[i][j].setBounds(j*60 + 5 ,i*110 + 5,50,90);
+                    matriz[i][j].setBounds(j*70 + 5 ,i*200 + 5,60,190);
                     scrollPane.add(matriz[i][j]);
                     
                 }
@@ -273,21 +388,8 @@ public class CambioMonedas extends JFrame implements ActionListener{
             scrollPane1.setViewportView(scrollPane);
             
         }
+  
         
     }
-    
-    double hallarMin( double a, double b){
-        
-        if(a<b){
-            
-            return a; 
-            
-        } else {
-            
-            return b;
-            
-        }
-        
-    }
-    
+ 
 }
